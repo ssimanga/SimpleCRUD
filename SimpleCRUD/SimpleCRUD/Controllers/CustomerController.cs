@@ -16,5 +16,23 @@ namespace SimpleCRUD.Controllers
             var customers = context.Customers.ToList();
             return View(customers);
         }
+
+        public ActionResult AddNew()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddNew(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Customers.Add(customer);
+                context.SaveChanges();
+            }
+                
+
+            return RedirectToAction("Index");
+        }
     }
 }
