@@ -62,5 +62,19 @@ namespace SimpleCRUD.Controllers
             }
             return View(customer);
         }
+
+        public ActionResult ViewCustomer(string Id)
+        {
+            if(Id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var customer = context.Customers.SingleOrDefault(c => c.Id == Id);
+            if(customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
     }
 }
