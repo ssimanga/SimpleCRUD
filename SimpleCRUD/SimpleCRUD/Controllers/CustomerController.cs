@@ -76,5 +76,29 @@ namespace SimpleCRUD.Controllers
             }
             return View(customer);
         }
+
+        public ActionResult Delete(string Id)
+        {
+            if (Id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var customer = context.Customers.SingleOrDefault(c => c.Id == Id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Customer customer, string Id)
+        {
+            customer = context.Customers.SingleOrDefault(c => c.Id == Id);
+            context.Customers.Remove(customer ?? throw new InvalidOperationException());
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }
